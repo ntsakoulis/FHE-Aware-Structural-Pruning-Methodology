@@ -218,7 +218,7 @@ __marimo__/
 *.onnx
 
 # Numpy data files
-*.npy
+#*.npy
 *.npz
 *.csv
 
