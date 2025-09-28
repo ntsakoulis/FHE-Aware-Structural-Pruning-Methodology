@@ -1,12 +1,6 @@
-# FHE-Aware-Structural-Pruning-Methodology
-A framework methodology for pruning and quantizing neural networks tailored for Fully Homomorphic Encryption (FHE) inference, enabling reduced model size, lower latency, and efficient encrypted computations.
-
-
 # FHE-Aware MLP Methodology
 
-This repository contains a complete workflow for training, pruning, and evaluating 
-Multilayer Perceptron (MLP) models for arrhythmia classification, with a focus on 
-efficient deployment under Fully Homomorphic Encryption (FHE).
+A framework methodology for pruning and quantizing neural networks tailored for Fully Homomorphic Encryption (FHE) inference, enabling reduced model size, lower latency, and efficient encrypted computations.
 
 ---
 
@@ -26,57 +20,11 @@ The final dataset contains **24,148 balanced samples** from two ECG channels.
 
 ## Workflow
 
-The full workflow is organized into the following steps:
-
-1. **Train baseline MLP** (`MLP_model_0.py`)  
-   - Trains and evaluates a baseline MLP.  
-   - Output: `MLP_model_0.h5`.
-
-2. **Structured pruning** (`TF_pruning.py`)  
-   - Applies polynomial decay pruning (25% → 75%) with TFMOT.  
-   - Output: `tf_pruned_model.h5`.
-
-3. **Dynamic pruning & latency evaluation** (`dynamic_pruning_eval.py`)  
-   - Iteratively prunes neurons with zero weights.  
-   - Evaluates pruning rates (25% → 90%).  
-   - Benchmarks accuracy & latency (ms per sample).  
-   - **Saves the Top-10 pruned models**.  
-
-4. **Convert to ONNX** (`h52onnx.py`)  
-   - Converts selected `.h5` models (baseline or pruned) to `.onnx`.  
-   - Validates with ONNX checker.  
-
-5. **FHE Experiments** (`fhe_experiments.py`)  
-   - Takes the **best models from Step 3** (saved `.onnx` versions).  
-   - Runs quantization (2–7 bits).  
-   - Evaluates in both **clear** and **FHE mode** using Concrete-ML.  
-   - Records compile time, accuracy, and per-sample latency.  
-   - Saves results to `.xlsx` files per batch.
-
----
-
-## Scripts Overview
-
-- **MLP_model_0.py** → Baseline training & evaluation.  
-- **TF_pruning.py** → Structured pruning with TFMOT.  
-- **dynamic_pruning_eval.py** → Custom pruning + latency benchmarks, outputs top models.  
-- **h52onnx.py** → Convert Keras `.h5` to ONNX.  
-- **fhe_experiments.py** → Compile/evaluate ONNX models in clear & FHE mode.  
-
----
-
-## Requirements
-
-- Python 3.8+
-- TensorFlow 2.x
-- TensorFlow Model Optimization Toolkit (`tfmot`)
-- NumPy
-- Matplotlib
-- scikit-learn
-- pandas
-- tf2onnx
-- onnx
-- [Concrete-ML](https://github.com/zama-ai/concrete-ml)
+1. **Baseline Training** → Train and evaluate an MLP model on the MIT-BIH dataset.  
+2. **Structured Pruning (TFMOT)** → Apply polynomial decay pruning (25% → 75%).  
+3. **Dynamic Pruning** → Explore multiple pruning rates, benchmark accuracy & latency, and keep the Top-10 models.  
+4. **ONNX Conversion** → Convert selected models to `.onnx` format.  
+5. **FHE Experiments** → Quantize & evaluate the best models in clear and FHE mode.
 
 ---
 
@@ -110,7 +58,7 @@ The full workflow is organized into the following steps:
 - **Step 4 – Convert best models to ONNX**
   - Run:
     ```bash
-    python h52onnx.py
+    python h5_onnx_converter.py
     ```
   - Converts `.h5` models into `.onnx` format.  
   - Validates with ONNX checker.
