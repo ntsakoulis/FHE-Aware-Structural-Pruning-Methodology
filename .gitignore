@@ -205,3 +205,27 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+
+# ----------------------------------------
+# Custom ignores for FHE_Aware_MLP project
+# ----------------------------------------
+
+# Model checkpoints
+*.h5
+*.pb
+*.onnx
+
+# Numpy data files
+*.npy
+*.npz
+*.csv
+
+# Experiment results
+*.xlsx
+
+# Logs
+logs/
+*.log
+
